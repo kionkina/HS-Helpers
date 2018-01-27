@@ -65,8 +65,28 @@ def check_credentials(username, password):
     for thing in r:
         return True
     return False
+
+def is_username_used(username):
+    comm = "SELECT * FROM company WHERE name=?"
+    r = execute_param_command(comm, [username])
+    for thing in r:
+        return True
+    return False
+
+def get_info(name):
+    comm = "SELECT info FROM company WHERE name=?"
+    r = execute_param_command(comm, [name])
+    for thing in r:
+        return thing[0]
+
+def edit_info(name, new_info):
+    comm = "UPDATE company SET info=? WHERE name=?"
+    execute_param_command(comm, (new_info, name))
+
+#print is_username_used('Shaina')
 #create_table()
 #add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
+#edit_info("Shaina", "Updated info")
 #print_table()
 #print check_credentials("Shaina4", "pwd")
-
+print get_info("Shaina")
