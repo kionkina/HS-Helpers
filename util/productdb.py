@@ -34,10 +34,10 @@ def get_current_number(): #Makes sure the id is the last used id+1
     except: 
         return 0
 
-def add_product(price, productid, quantity, productname, username, company):
-    comm = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?)"
+def add_product(price, productid, quantity, productname, username, company, time):
+    comm = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?, ?)"
     productid = get_current_number()
-    params = (price, productid, quantity, productname, username, company)
+    params = (price, productid, quantity, productname, username, company, time)
     execute_param_command(comm, params)
     return True
 
