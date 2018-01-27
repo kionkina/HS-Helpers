@@ -7,8 +7,9 @@ import csv,os,json
 import requests
 from exceptions import ValueError
 from time import sleep
-from util import productdb 
+from util import productdb
 import sys
+import datetime
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -133,7 +134,7 @@ def ajax_helper():
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
     page = requests.get(url,headers=headers)
 #    while True:
-    sleep(3)
+    #sleep(3)
     try:
         doc = html.fromstring(page.content)
         XPATH_NAME = '//h1[@id="title"]//text()'
@@ -170,22 +171,24 @@ def ajax_helper():
 
         extracted_data = []
         url = "https://www.amazon.com/Headphones-Otium-Waterproof-Sweatproof-Cancelling/dp/B018APC4LE/ref=sr_1_5?ie=UTF8&qid=1517035633&sr=8-5&keywords=headphones"
-        print "Processing: "+url
+        #print "Processing: "+url
         extracted_data.append(data)
-        sleep(5)
+        #sleep(5)
         price = extracted_data[0]['SALE_PRICE']
-        time = time.time()
-        print price
-        print the_username
+        print extracted_data
+        time = datetime.datetime.now()
+        time = (str(time))
+        #print price
+        #print the_username
         productname = extracted_data[0]['NAME']
         productdb.add_product(price, productdb.get_current_number(), quantity, productname, the_username, company, time)
         productdb.print_table()
         return price
-        
+
     except Exception as e:
             print e
 
-            
+
 
 
 @app.route('/d_dashboard')

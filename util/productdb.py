@@ -31,7 +31,7 @@ def get_current_number(): #Makes sure the id is the last used id+1
     try:
         for i in r:
             return i[0]+1
-    except: 
+    except:
         return 0
 
 def add_product(price, productid, quantity, productname, username, company, time):
@@ -74,6 +74,6 @@ def edit_info(name, new_info):
     execute_param_command(comm, (new_info, name))
 
 
-create_table()
-add_product( 19.99, 1, 10, "headphones", "shaina123", "shiana_corps") 
-print_table()
+#create_table()
+#add_product( 19.99, 1, 10, "headphones", "shaina123", "shiana_corps")
+#print_table()
