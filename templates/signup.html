@@ -1,29 +1,22 @@
 <html>
 <body>
 
-
-
 <center>
-    <font face = "Comic Sans MS" size ='200' color='cyan'>
-    </font>
-
-    <form action="/auth" method="POST">
-        Username:
+  <!-- <font face = "Comic Sans MS" size ='200' color='green' </font> -->
+    <form action="/signauth" method="POST">
+        Pick a Username:
         <input type="text" name='username'>
         <br>
-        Password:
+        Pick a Password:
         <input type="password" name='password'>
         <br>
-        <input type= "submit" name="submit" value="Login">
-<br>
-<br>
+        Confirm Password:
+        <input type="password" name='password2'>
+        <br>
+        <input type= "submit" name="submit" value="Create an account">
     </form>
-      <form action="/signup" method="POST">
-        <input type="submit" value="Sign Up">
-    </form>
-
-
 </center>
+
 
 </body>
 </html>

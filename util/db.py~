@@ -32,8 +32,8 @@ def create_table():
     for a in r:
         print a
 
-def check_credentials(username, password):
+def check_credentials():
     return True
 
 #create_table()
-#add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
+add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
