@@ -31,7 +31,7 @@ def get_current_number(): #Makes sure the id is the last used id+1
     for i in r:
         return i[0]+1
 
-def add_company(name, email, password, info):
+def add_company(name, email, password, info=""):
     comm = "INSERT INTO company VALUES (?, ?, ?, ?, ?)"
     id = get_current_number()
     hashed_password = sha1(password).hexdigest()
