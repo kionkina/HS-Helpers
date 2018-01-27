@@ -44,13 +44,13 @@ def create_table():
     for a in r:
         print a
 
-<<<<<<< HEAD
+
 def check_credentials(username, password):
     return True
 
 #create_table()
 #add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
-=======
+
 def print_table():
     comm = "SELECT * FROM company"
     r = execute_command(comm)
@@ -68,4 +68,4 @@ def check_credentials(username, password):
 #add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
 #print_table()
 #print check_credentials("Shaina4", "pwd")
->>>>>>> 41421c15ea89dc7bde5ffb187420a43108ee9485
+

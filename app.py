@@ -71,6 +71,7 @@ def signauth():
         username = request.form['username']
         password = request.form['password']
         password2 = request.form['password2']
+        email = request.form['email']
     except KeyError:
         flash("Please fill out all fields")
         return render_template("signup.html")
@@ -80,7 +81,7 @@ def signauth():
     if username == "" or password == "" or password2 == "":
         flash("Fields must not be blank")
         return render_template("signup.html")
-    if db.add_company(username, password):
+    if db.add_company(username, password, email):
         #success! username and password added to database
         flash("Successfully created!")
         return redirect(url_for('signin'))

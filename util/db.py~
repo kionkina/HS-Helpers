@@ -1,4 +1,5 @@
 import sqlite3
+from hashlib import sha1
 
 def get_cursor(db_filename='util/users.db'):
     db = sqlite3.connect(db_filename)
@@ -10,7 +11,14 @@ def get_dbc(db_filename='util/users.db'):
     c = db.cursor()
     return [db, c]
 
-def execute_command(command, params):
+def execute_command(command):
+    dbc = get_dbc()
+    c = dbc[1]
+    r = c.execute(command)
+    dbc[0].commit()
+    return r
+
+def execute_param_command(command, params):
     dbc = get_dbc()
     c = dbc[1]
     r = c.execute(command, params)
@@ -19,12 +27,16 @@ def execute_command(command, params):
 
 def get_current_number(): #Makes sure the id is the last used id+1
     comm = "SELECT MAX(id) FROM company"
-    r = execute_command()
+    r = execute_command(comm,)
+    for i in r:
+        return i[0]+1
 
-def add_company(id, name, email, password, info):
+def add_company(name, email, password, info):
     comm = "INSERT INTO company VALUES (?, ?, ?, ?, ?)"
-    params = (id, name, email, password, info)
-    execute_command(comm, params)
+    id = get_current_number()
+    hashed_password = sha1(password).hexdigest()
+    params = (id, name, email, hashed_password, info)
+    execute_param_command(comm, params)
 
 def create_table():
     c = get_cursor()[1]
@@ -32,8 +44,28 @@ def create_table():
     for a in r:
         print a
 
-def check_credentials():
+<<<<<<< HEAD
+def check_credentials(username, password):
     return True
 
 #create_table()
-add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
+#add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
+=======
+def print_table():
+    comm = "SELECT * FROM company"
+    r = execute_command(comm)
+    for thing in r:
+        print thing
+
+def check_credentials(username, password):
+    hashed_password = sha1(password).hexdigest()
+    comm = "SELECT * FROM company WHERE name=? AND password=?"
+    r = execute_param_command(comm, (username, hashed_password))
+    for thing in r:
+        return True
+    return False
+#create_table()
+#add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
+#print_table()
+#print check_credentials("Shaina4", "pwd")
+>>>>>>> 41421c15ea89dc7bde5ffb187420a43108ee9485
