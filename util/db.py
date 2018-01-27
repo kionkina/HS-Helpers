@@ -37,6 +37,7 @@ def add_company(name, email, password, info=""):
     hashed_password = sha1(password).hexdigest()
     params = (id, name, email, hashed_password, info)
     execute_param_command(comm, params)
+    return True
 
 def create_table():
     c = get_cursor()[1]
