@@ -56,7 +56,10 @@ def print_table():
         print thing
 
 def check_credentials(username, password):
+    
     hashed_password = sha1(password).hexdigest()
+    print username
+    print hashed_password
     comm = "SELECT * FROM company WHERE name=? AND password=?"
     r = execute_param_command(comm, (username, hashed_password))
     for thing in r:

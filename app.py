@@ -7,11 +7,12 @@ import csv,os,json
 import requests
 from exceptions import ValueError
 from time import sleep
-
+from util import productdb 
+import sys
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-
+print sys.path
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -43,10 +44,8 @@ def signin():
 def HS_homepage():
     if "username" in session:
         username = session["username"]
-        'SELECT id FROM company WHERE name =' + username 
-        #displays a list of edited stories
         return render_template("HS_homepage.html")
-    return render_template("signin.html")
+    return render_template("landing.html")
 
 @app.route('/auth', methods = ["GET", "POST"])
 def auth():
@@ -90,8 +89,8 @@ def signauth():
     if username == "" or password == "" or password2 == "":
         print("Fields must not be blank")
         return render_template("signup.html")
-    print db.add_company(username, password, email, info)
-    if db.add_company(username, password, email, info):
+    print db.add_company(username,  email, password, info)
+    if db.add_company(username,  email, password, info):
         #success! username and password added to database
         print("Successfully created!")
         session['username'] = username
@@ -125,37 +124,42 @@ def logged_in():
 def ajax_helper():
     print "running..."
     url = request.form['link']
-
+    the_username = session['username']
+    print the_username
+    quantity = request.form['qty']
+    print quantity
+    company = request.form['company']
+    print company
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
     page = requests.get(url,headers=headers)
-    while True:
- #       sleep(3)
-        try:
-            doc = html.fromstring(page.content)
-            XPATH_NAME = '//h1[@id="title"]//text()'
-            XPATH_SALE_PRICE = '//span[contains(@id,"ourprice") or contains(@id,"saleprice")]/text()'
-            XPATH_ORIGINAL_PRICE = '//td[contains(text(),"List Price") or contains(text(),"M.R.P") or contains(text(),"Price")]/following-sibling::td/text()'
-            XPATH_CATEGORY = '//a[@class="a-link-normal a-color-tertiary"]//text()'
-            XPATH_AVAILABILITY = '//div[@id="availability"]//text()'
+#    while True:
+    sleep(3)
+    try:
+        doc = html.fromstring(page.content)
+        XPATH_NAME = '//h1[@id="title"]//text()'
+        XPATH_SALE_PRICE = '//span[contains(@id,"ourprice") or contains(@id,"saleprice")]/text()'
+        XPATH_ORIGINAL_PRICE = '//td[contains(text(),"List Price") or contains(text(),"M.R.P") or contains(text(),"Price")]/following-sibling::td/text()'
+        XPATH_CATEGORY = '//a[@class="a-link-normal a-color-tertiary"]//text()'
+        XPATH_AVAILABILITY = '//div[@id="availability"]//text()'
 
-            RAW_NAME = doc.xpath(XPATH_NAME)
-            RAW_SALE_PRICE = doc.xpath(XPATH_SALE_PRICE)
-            RAW_CATEGORY = doc.xpath(XPATH_CATEGORY)
-            RAW_ORIGINAL_PRICE = doc.xpath(XPATH_ORIGINAL_PRICE)
-            RAw_AVAILABILITY = doc.xpath(XPATH_AVAILABILITY)
+        RAW_NAME = doc.xpath(XPATH_NAME)
+        RAW_SALE_PRICE = doc.xpath(XPATH_SALE_PRICE)
+        RAW_CATEGORY = doc.xpath(XPATH_CATEGORY)
+        RAW_ORIGINAL_PRICE = doc.xpath(XPATH_ORIGINAL_PRICE)
+        RAw_AVAILABILITY = doc.xpath(XPATH_AVAILABILITY)
 
-            NAME = ' '.join(''.join(RAW_NAME).split()) if RAW_NAME else None
-            SALE_PRICE = ' '.join(''.join(RAW_SALE_PRICE).split()).strip() if RAW_SALE_PRICE else None
-            CATEGORY = ' > '.join([i.strip() for i in RAW_CATEGORY]) if RAW_CATEGORY else None
-            ORIGINAL_PRICE = ''.join(RAW_ORIGINAL_PRICE).strip() if RAW_ORIGINAL_PRICE else None
-            AVAILABILITY = ''.join(RAw_AVAILABILITY).strip() if RAw_AVAILABILITY else None
+        NAME = ' '.join(''.join(RAW_NAME).split()) if RAW_NAME else None
+        SALE_PRICE = ' '.join(''.join(RAW_SALE_PRICE).split()).strip() if RAW_SALE_PRICE else None
+        CATEGORY = ' > '.join([i.strip() for i in RAW_CATEGORY]) if RAW_CATEGORY else None
+        ORIGINAL_PRICE = ''.join(RAW_ORIGINAL_PRICE).strip() if RAW_ORIGINAL_PRICE else None
+        AVAILABILITY = ''.join(RAw_AVAILABILITY).strip() if RAw_AVAILABILITY else None
 
-            if not ORIGINAL_PRICE:
-                ORIGINAL_PRICE = SALE_PRICE
+        if not ORIGINAL_PRICE:
+            ORIGINAL_PRICE = SALE_PRICE
 
-            if page.status_code!=200:
-                raise ValueError('captha')
-            data = {
+        if page.status_code!=200:
+            raise ValueError('captha')
+        data = {
                     'NAME':NAME,
                     'SALE_PRICE':SALE_PRICE,
                     'CATEGORY':CATEGORY,
@@ -164,14 +168,20 @@ def ajax_helper():
                     'URL':url,
                     }
 
-            extracted_data = []
-            url = "https://www.amazon.com/Headphones-Otium-Waterproof-Sweatproof-Cancelling/dp/B018APC4LE/ref=sr_1_5?ie=UTF8&qid=1517035633&sr=8-5&keywords=headphones"
-            print "Processing: "+url
-            extracted_data.append(data)
-#            sleep(5)
-            to_return = extracted_data[0]['SALE_PRICE']
-            return to_return
-        except Exception as e:
+        extracted_data = []
+        url = "https://www.amazon.com/Headphones-Otium-Waterproof-Sweatproof-Cancelling/dp/B018APC4LE/ref=sr_1_5?ie=UTF8&qid=1517035633&sr=8-5&keywords=headphones"
+        print "Processing: "+url
+        extracted_data.append(data)
+        sleep(5)
+        price = extracted_data[0]['SALE_PRICE']
+        print price
+        print the_username
+        productname = extracted_data[0]['NAME']
+        productdb.add_product(price, productdb.get_current_number(), quantity, productname, the_username, company)
+        productdb.print_table()
+        return price
+        
+    except Exception as e:
             print e
 
             
@@ -183,7 +193,12 @@ def d_dashboard():
 
 
 
-
+@app.route('/add_item')
+def add_item():
+    if "username" in session:
+        return render_template("add_item.html")
+    else:
+        return render_template("landing.html")
 
 
 if __name__ == '__main__':

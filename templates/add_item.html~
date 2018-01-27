@@ -1,0 +1,52 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+<script src="static/js/homepage.js"> </script>
+</head>
+<body>
+
+<a href="/add_item">
+Add Wishlist Item to Collection
+</a>
+
+
+
+<div id="div1">
+</div>
+
+<form name="add_item">
+
+Enter Amazon Link:
+<input type="text" name="link"> </input>
+
+<br>
+
+
+
+Enter Quantity Demanded
+<input type="text" name="qty">   </input>
+
+<br>
+
+Which Organization
+<select name="organization">
+{% for i in org %}
+  <option value="{{i.name}}"> {{i.name}} </option>
+{% endfor %}
+
+</select>
+
+
+<button> Submit </button>
+</form>
+ <a href="/logout">Logout</a>
+
+
+
+
+
+</body>
+
+
+
+<html>
