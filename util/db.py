@@ -46,9 +46,6 @@ def create_table():
         print a
 
 
-def check_credentials(username, password):
-    return True
-
 #create_table()
 #add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
 
