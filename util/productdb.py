@@ -26,15 +26,18 @@ def execute_param_command(command, params):
     return r
 
 def get_current_number(): #Makes sure the id is the last used id+1
-    comm = "SELECT MAX(id) FROM product"
+    comm = "SELECT MAX(productid) FROM product"
     r = execute_command(comm,)
-    for i in r:
-        return i[0]+1
+    try:
+        for i in r:
+            return i[0]+1
+    except: 
+        return 0
 
-def add_product(name, price, quantity, info=""):
-    comm = "INSERT INTO product VALUES (?, ?, ?, ?, ?)"
-    id = get_current_number()
-    params = (id, name, price, quantity, info)
+def add_product(price, productid, quantity, productname, username, company):
+    comm = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?)"
+    productid = get_current_number()
+    params = (price, productid, quantity, productname, username, company)
     execute_param_command(comm, params)
     return True
 
@@ -69,3 +72,8 @@ def get_info(name):
 def edit_info(name, new_info):
     comm = "UPDATE product SET info=? WHERE name=?"
     execute_param_command(comm, (new_info, name))
+
+
+create_table()
+add_product( 19.99, 1, 10, "headphones", "shaina123", "shiana_corps") 
+print_table()

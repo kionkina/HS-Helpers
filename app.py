@@ -43,6 +43,7 @@ def signin():
 def HS_homepage():
     if "username" in session:
         username = session["username"]
+        'SELECT id FROM company WHERE name =' + username 
         #displays a list of edited stories
         return render_template("HS_homepage.html")
     return render_template("signin.html")
@@ -172,12 +173,16 @@ def ajax_helper():
             return to_return
         except Exception as e:
             print e
+
             
 
 
 @app.route('/d_dashboard')
 def d_dashboard():
     return render_template('d_dashboard.html')
+
+
+
 
 
 
