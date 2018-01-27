@@ -17,7 +17,7 @@ app.secret_key = os.urandom(32)
 def index():
     if "username" in session:
         return redirect(url_for("HS_homepage"))
-    return redirect(url_for("signup"))
+    return render_template("landing.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -175,10 +175,9 @@ def ajax_helper():
             
 
 
-
-#    print "running 2..."
-#    print scrape2.data_scrape(data)
-#    return data
+@app.route('/d_dashboard')
+def d_dashboard():
+    return render_template('d_dashboard.html')
 
 
 

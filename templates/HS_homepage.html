@@ -4,37 +4,15 @@
 <script src="static/js/homepage.js"> </script>
 </head>
 <body>
-YAY YOU'RE SIGNED IN!
-
-<div id="div1">
-</div>
-
-<form name="add_item">
-
-Enter Amazon Link:
-<input type="text" name="link"> </input>
-
-<br>
 
 
 
-Enter Quantity Demanded
-<input type="text" name="qty">   </input>
-
-<br> 
-
-Which Organization 
-<select name="organization">     
-{% for i in org %}
-  <option value="{{i.name}}"> {{i.name}} </option>
-{% endfor %} 
-
-</select>
+here you see a list of current wishlist items.
 
 
-<button> Submit </button>
-</form>
- <a href="/logout">Logout</a>
+<a href="/add_item">
+Add Wishlist Item to Collection
+</a>
 
 
 

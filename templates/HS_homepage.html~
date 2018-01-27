@@ -1,4 +1,8 @@
 <html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+<script src="static/js/homepage.js"> </script>
+</head>
 <body>
 YAY YOU'RE SIGNED IN!
 
@@ -8,37 +12,33 @@ YAY YOU'RE SIGNED IN!
 <form name="add_item">
 
 Enter Amazon Link:
-<input type="text" name="url"> </input>
+<input type="text" name="link"> </input>
 
 <br>
 
-<script>
-
-var url= document.getElementById("url")
-console.log(url)
-
-$.ajax({
-  type: "POST",
-  url: "util/ajax_helper.py",
-  dataType: "json",
-  data: {"url": url}
- success: function(response) {
-        var div = document.getElementbyId("div1");
-        div.innerHTML += response;
-    }
-})
-
-
-</script>
 
 
 Enter Quantity Demanded
 <input type="text" name="qty">   </input>
 
-Enter Organization ID:
-<input type="text" name="id">     </input>
+<br> 
 
+Which Organization 
+<select name="organization">     
+{% for i in org %}
+  <option value="{{i.name}}"> {{i.name}} </option>
+{% endfor %} 
+
+</select>
+
+
+<button> Submit </button>
+</form>
  <a href="/logout">Logout</a>
+
+
+
+
 
 </body>
 
