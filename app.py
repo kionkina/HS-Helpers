@@ -19,7 +19,7 @@ def signup():
     if "username" not in session:
         return render_template("signup.html")
     else:
-        flash("You're already logged in!")
+        print("You're already logged in!")
         return redirect(url_for("HS_homepage"))
 
 
@@ -28,7 +28,7 @@ def signin():
     if "username" not in session:
         return render_template("signin.html")
     else:
-        flash("You're already logged in!")
+        print("You're already logged in!")
         return redirect(url_for("HS_homepage"))
 
 
@@ -53,15 +53,15 @@ def auth():
         username = request.form['username']
         password = request.form['password']
     except KeyError:
-        flash("Please fill out all fields")
+        print("Please fill out all fields")
         return render_template("signin.html")
     #login authenticated!
     if db.check_credentials(username,password):
         session['username'] = username
-        flash("Successfully logged in")
+        print("Successfully logged in")
         return redirect(url_for('HS_homepage'))
     else:
-        flash("Failed login")
+        print("Failed login")
         return redirect(url_for('signin'))
 
 @app.route('/signauth', methods = ["GET", "POST"])
@@ -73,31 +73,31 @@ def signauth():
         password2 = request.form['password2']
         email = request.form['email']
     except KeyError:
-        flash("Please fill out all fields")
+        print("Please fill out all fields")
         return render_template("signup.html")
     if password != password2:
-        flash("Passwords don't match")
+        print("Passwords don't match")
         return render_template("signup.html")
     if username == "" or password == "" or password2 == "":
-        flash("Fields must not be blank")
+        print("Fields must not be blank")
         return render_template("signup.html")
     if db.add_company(username, password, email):
         #success! username and password added to database
-        flash("Successfully created!")
-        return redirect(url_for('signin'))
+        print("Successfully created!")
+        return redirect(url_for('HS_homepage'))
     else:
         #username couldn't be added to database because it already exists
-        flash("Username taken")
+        print("Username taken")
         return redirect(url_for('signup'))
 
 
 @app.route('/logout')
 def logout():
     if "username" not in session:
-        flash("You aren't logged in")
+        print("You aren't logged in")
         return redirect(url_for('signin'))
     session.pop("username")
-    flash("You've been logged out")
+    print("You've been logged out")
     return redirect(url_for('index'))
 
 
