@@ -1,0 +1,25 @@
+<html>
+<body>
+
+<center>
+  <!-- <font face = "Comic Sans MS" size ='200' color='green' </font> -->
+    <form action="/signauth" method="POST">
+        Pick a Username:
+        <input type="text" name='username'>
+        <br>
+        Pick a Password:
+        <input type="password" name='password'>
+        <br>
+        Confirm Password:
+        <input type="password" name='password2'>
+        <br>
+	Your Email:
+        <input type="email" name='email'>
+        <br>
+        <input type="submit" name="submit" value="Create an account">
+    </form>
+</center>
+
+
+</body>
+</html>

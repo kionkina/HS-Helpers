@@ -1,0 +1,5 @@
+import scrape2
+
+
+url = request.GET.getlist('url')
+print url
