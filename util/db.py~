@@ -31,12 +31,13 @@ def get_current_number(): #Makes sure the id is the last used id+1
     for i in r:
         return i[0]+1
 
-def add_company(name, email, password, info):
+def add_company(name, email, password, info=""):
     comm = "INSERT INTO company VALUES (?, ?, ?, ?, ?)"
     id = get_current_number()
     hashed_password = sha1(password).hexdigest()
     params = (id, name, email, hashed_password, info)
     execute_param_command(comm, params)
+    return True
 
 def create_table():
     c = get_cursor()[1]
@@ -44,13 +45,13 @@ def create_table():
     for a in r:
         print a
 
-<<<<<<< HEAD
+
 def check_credentials(username, password):
     return True
 
 #create_table()
 #add_company(1, "Shaina", "darthbeep@gmail.com", "pwd", "no")
-=======
+
 def print_table():
     comm = "SELECT * FROM company"
     r = execute_command(comm)
@@ -68,4 +69,4 @@ def check_credentials(username, password):
 #add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
 #print_table()
 #print check_credentials("Shaina4", "pwd")
->>>>>>> 41421c15ea89dc7bde5ffb187420a43108ee9485
+

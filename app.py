@@ -56,6 +56,7 @@ def auth():
         print("Please fill out all fields")
         return render_template("signin.html")
     #login authenticated!
+    print db.check_credentials(username,password)
     if db.check_credentials(username,password):
         session['username'] = username
         print("Successfully logged in")
@@ -72,6 +73,7 @@ def signauth():
         password = request.form['password']
         password2 = request.form['password2']
         email = request.form['email']
+        info = request.form['info']
     except KeyError:
         print("Please fill out all fields")
         return render_template("signup.html")
@@ -81,9 +83,11 @@ def signauth():
     if username == "" or password == "" or password2 == "":
         print("Fields must not be blank")
         return render_template("signup.html")
-    if db.add_company(username, password, email):
+    print db.add_company(username, password, email, info)
+    if db.add_company(username, password, email, info):
         #success! username and password added to database
         print("Successfully created!")
+        session['username'] = username
         return redirect(url_for('HS_homepage'))
     else:
         #username couldn't be added to database because it already exists
