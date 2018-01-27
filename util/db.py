@@ -58,6 +58,6 @@ def check_credentials(username, password):
         return True
     return False
 #create_table()
-add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
-print_table()
-print check_credentials("Shaina4", "pwd")
+#add_company("Shaina4", "darthbeep@gmail.com", "pwd", "no")
+#print_table()
+#print check_credentials("Shaina4", "pwd")
