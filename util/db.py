@@ -86,4 +86,4 @@ def edit_info(name, new_info):
 #edit_info("Shaina", "Updated info")
 #print_table()
 #print check_credentials("Shaina4", "pwd")
-print get_info("Shaina")
+#print get_info("Shaina")

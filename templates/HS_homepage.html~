@@ -1,6 +1,47 @@
 <html>
 <body>
 YAY YOU'RE SIGNED IN!
+
+<div id="div1">
+</div>
+
+<form name="add_item">
+
+Enter Amazon Link:
+<input type="text" name="url"> </input>
+
+<br>
+
+<script>
+
+var url= document.getElementById("url")
+console.log(url)
+
+$.ajax({
+  type: "POST",
+  url: "util/ajax_helper.py",
+  dataType: "json",
+  data: {"url": url}
+ success: function(response) {
+        var div = document.getElementbyId("div1");
+        div.innerHTML += response;
+    }
+})
+
+
+</script>
+
+
+Enter Quantity Demanded
+<input type="text" name="qty">   </input>
+
+Enter Organization ID:
+<input type="text" name="id">     </input>
+
+ <a href="/logout">Logout</a>
+
 </body>
+
+
 
 <html>
