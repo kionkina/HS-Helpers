@@ -174,10 +174,11 @@ def ajax_helper():
         extracted_data.append(data)
         sleep(5)
         price = extracted_data[0]['SALE_PRICE']
+        time = time.time()
         print price
         print the_username
         productname = extracted_data[0]['NAME']
-        productdb.add_product(price, productdb.get_current_number(), quantity, productname, the_username, company)
+        productdb.add_product(price, productdb.get_current_number(), quantity, productname, the_username, company, time)
         productdb.print_table()
         return price
         
